@@ -25,18 +25,20 @@
   },
   "homepage": "https://github.com/troytheboy/magnus#readme",
   "dependencies": {
-    "@discordjs/opus": "^0.3.3",
-    "axios": "^0.21.1",
+    "@discordjs/opus": "^0.10.0",
+    "axios": "^1.12.2",
     "chalk": "^4.0.0",
     "discord.js": "^14.18.0",
     "ffmpeg-static": "^4.2.7",
     "fs": "^0.0.1-security",
     "opusscript": "^0.0.8",
     "request": "^2.88.2",
+    "yt-search": "^2.13.1",
     "ytdl-core": "^4.11.2",
     "ytsr": "^3.2.3"
   },
   "devDependencies": {
-    "eslint": "^7.0.0"
+    "@eslint/js": "^9.37.0",
+    "eslint": "^7.32.0"
   }
 }
