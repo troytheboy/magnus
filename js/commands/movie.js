@@ -35,7 +35,7 @@ exports.handleMessage = function (message) {
             const ratings = json.Ratings;
             let ratingsString = "";
 
-            const embed = new Discord.MessageEmbed()
+            const embed = new Discord.EmbedBuilder()
               .setColor("#0099ff")
               .setTitle(json.Title)
               .setDescription(json.Plot)

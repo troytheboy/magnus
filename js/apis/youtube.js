@@ -1,6 +1,5 @@
 // Imports
-const ytsr = require("ytsr");
-
+const yts = require("yt-search");
 // Global constants
 const OPTIONS = {
   pages: 1,
@@ -8,21 +7,10 @@ const OPTIONS = {
 
 exports.search = function (queryString) {
   return new Promise((resolve, reject) => {
-    ytsr
-      .getFilters(queryString)
-      .then((filters1) => {
-        const filter1 = filters1.get("Type").get("Video");
-        try {
-          ytsr(filter1.url, OPTIONS)
-            .then((searchResults) => {
-              const playbackURL = searchResults.items[0].url;
-              resolve(playbackURL);
-            })
-            .catch((e) => reject(e));
-        } catch (e) {
-          reject(e);
-        }
-      })
-      .catch((e) => reject(e));
+    yts(queryString).then((results) => {
+      const firstResult = results.videos[0];
+      console.log(firstResult);
+      resolve(firstResult.url);
+    }).catch(e => reject(e));
   });
 };

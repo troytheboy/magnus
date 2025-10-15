@@ -1,5 +1,5 @@
 // Third party imports
-const { Client, Events, GatewayIntentBits, Collection } = require('discord.js');
+const { Client, Events, GatewayIntentBits, Collection, Embed } = require('discord.js');
 const path = require('node:path');
 const fs = require('node:fs');
 
@@ -34,19 +34,23 @@ for (let _command of _COMMANDS_LIST) {
     COMMAND_HANDLERS[alias] = _command;
   }
 }
-console.log(COMMAND_HANDLERS);
+// console.log(COMMAND_HANDLERS);
 
 // // Slash Commands
-// require('./commands/utility/slash-commands/ping');
 
 // Main function
 function main() {
   Utils.log(MSG.MAGNUS_INIT);
-  const client = new Client({ intents: [GatewayIntentBits.Guilds] });
-
-  // Register discord event handlers
-  client.on("ready", onReady.bind(null, client));
-  client.on("message", onMessage);
+  const client = new Client({ 
+    intents: [
+      GatewayIntentBits.Guilds,
+      GatewayIntentBits.GuildMessages,
+      GatewayIntentBits.MessageContent,
+    ]
+  });
+  
+  client.on("clientReady", onReady.bind(null, client));
+  client.on("messageCreate", onMessage);
 
   // Log Magnus into the discord
   client.login(discordToken);
@@ -132,7 +136,12 @@ function onMessage(message) {
             user: message.author.tag,
             command: command,
           });
-          message.reply(data);
+          // If object, treat as Embed
+          if (typeof data == 'object') {
+            message.reply({embeds: [data]});
+          } else {
+            message.reply(data);
+          }          
         })
         .catch((msg, data, sendToDiscord) => {
           // All handlers should reject with a MSG object, any data to fill in with it,
